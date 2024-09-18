@@ -24,7 +24,7 @@ namespace Bulky.DataAccess.Repository
         {
             if (entity == null)
             {
-                throw new Exception("NotFound");
+                throw new Exception("The Information Could Not Be Created");
             }
             dbSet.Add(entity);
         }
@@ -45,7 +45,7 @@ namespace Bulky.DataAccess.Repository
             IQueryable<T> query = dbSet;
             if (query.Count() < 1)
             {
-                throw new Exception("NotFound");
+                throw new Exception("Location Is Empty");
             }
             return query.ToList();
         }
