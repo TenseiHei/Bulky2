@@ -24,7 +24,7 @@ namespace Bulky.DataAccess.Repository
         {
             if (entity == null)
             {
-                throw new Exception("The Table Could Not Be Created");
+                throw new Exception("The Item Could Not Be Created");
             }
             dbSet.Add(entity);
         }
