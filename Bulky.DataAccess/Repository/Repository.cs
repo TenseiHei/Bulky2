@@ -29,7 +29,7 @@ namespace Bulky.DataAccess.Repository
             }
             dbSet.Add(entity);
         }
-
+      
         public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
