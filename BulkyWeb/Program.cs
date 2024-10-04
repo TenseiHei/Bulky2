@@ -4,6 +4,7 @@ using Bulky.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+//var environment = builder.Environment;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -11,8 +12,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
+//var environment = app.Environment;
+//var startup = new StartupBase(buider.Configuration);
+//startup.ConfigureServices(builder.Services, builder.Environment);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

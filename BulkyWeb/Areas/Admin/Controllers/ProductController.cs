@@ -1,7 +1,9 @@
-﻿using Bulky.DataAccess.Data;
+﻿using AutoMapper;
+using Bulky.DataAccess.Data;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
+using Bulky.Utility.DTO.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -12,11 +14,14 @@ namespace BulkyWeb.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly IMapper _mapper;
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _mapper = mapper;
         }
+
         public IActionResult Index()
         {
             try
@@ -102,9 +107,12 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 {
                     _unitOfWork.Product.Update(productVM.Product);
                 }
+
                 _unitOfWork.Save();
+                ProductDto productDto = _mapper.Map<ProductDto>(productVM.Product);
                 TempData["success"] = "Product created successfully";
-                return RedirectToAction("Index");
+                return Ok(productDto);
+                //return RedirectToAction("Index");
             }
             else
             {
@@ -150,15 +158,15 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
 
 
-        #region API CALLS
+        //#region API CALLS
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
-            return Json(new {data = objProductList});
-        }
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
+        //    List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+        //    return Json(new { data = objProductList });
+        //}
 
-        #endregion
+        //#endregion
     }
 }
