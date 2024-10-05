@@ -40,6 +40,9 @@ namespace Bulky.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
+        public T Get(Expression<Func<T, bool>> filter)
+        {
+            IQueryable<T> query = dbSet;
             query = query.Where(filter);
             if (query.Count() < 1)
             {
@@ -58,6 +61,9 @@ namespace Bulky.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
+        public IEnumerable<T> GetAll()
+        {
+            IQueryable<T> query = dbSet;
             if (query.Count() < 1)
             {
                 throw new Exception("The Table Is Empty");
